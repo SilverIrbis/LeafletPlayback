@@ -751,7 +751,7 @@ L.Playback.TracksLayer = L.Class.extend({
         this.layer = new L.GeoJSON(null, layer_options);
 
         var overlayControl = {
-            'GPS Tracks' : this.layer
+            'GPS Треки' : this.layer
         };
 
         L.control.layers(null, overlayControl, {
@@ -832,7 +832,7 @@ L.Playback.PlayControl = L.Control.extend({
 
 
         this._button = L.DomUtil.create('button', '', playControl);
-        this._button.innerHTML = 'Play';
+        this._button.innerHTML = 'Старт';
 
 
         var stop = L.DomEvent.stopPropagation;
@@ -847,11 +847,11 @@ L.Playback.PlayControl = L.Control.extend({
         function play(){
             if (playback.isPlaying()) {
                 playback.stop();
-                self._button.innerHTML = 'Play';
+                self._button.innerHTML = 'Старт';
             }
             else {
                 playback.start();
-                self._button.innerHTML = 'Stop';
+                self._button.innerHTML = 'Стоп';
             }                
         }
 

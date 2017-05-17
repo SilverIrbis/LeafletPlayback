@@ -20,7 +20,7 @@ L.Playback.TracksLayer = L.Class.extend({
         this.layer = new L.GeoJSON(null, layer_options);
 
         var overlayControl = {
-            'GPS Tracks' : this.layer
+            'GPS Треки' : this.layer
         };
 
         L.control.layers(null, overlayControl, {
