@@ -40,7 +40,7 @@ L.Playback.DateControl = L.Control.extend({
     
 L.Playback.PlayControl = L.Control.extend({
     options : {
-        position : 'bottomright'
+        position : 'bottomleft'
     },
 
     initialize : function (playback) {

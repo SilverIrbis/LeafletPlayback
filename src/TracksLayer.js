@@ -24,7 +24,8 @@ L.Playback.TracksLayer = L.Class.extend({
         };
 
         L.control.layers(null, overlayControl, {
-            collapsed : false
+            collapsed : false,
+            position: 'bottomleft'
         }).addTo(map);
     },
 
