@@ -22,7 +22,14 @@ L.Playback.Util = L.Class.extend({
   statics: {
 
     DateStr: function(time) {
-      return new Date(time).toDateString();
+      var date = new Date(time);
+      var d = date.getDate();
+      var m = date.getMonth() + 1;
+      var y = date.getFullYear();
+
+      d = d < 10 ? '0' + d : d;
+      m = m < 10 ? '0' + m : m;
+      return d + '.' + m + '.' + y;
     },
 
     TimeStr: function(time) {
@@ -30,17 +37,10 @@ L.Playback.Util = L.Class.extend({
       var h = d.getHours();
       var m = d.getMinutes();
       var s = d.getSeconds();
-      var tms = time / 1000;
-      var dec = (tms - Math.floor(tms)).toFixed(2).slice(1);
-      var mer = 'AM';
-      if (h > 11) {
-        h %= 12;
-        mer = 'PM';
-      }
-      if (h === 0) h = 12;
+      if (h < 10) h = '0' + h;
       if (m < 10) m = '0' + m;
       if (s < 10) s = '0' + s;
-      return h + ':' + m + ':' + s + dec + ' ' + mer;
+      return h + ':' + m + ':' + s;
     },
 
     ParseGPX: function(gpx) {
