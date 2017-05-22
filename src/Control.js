@@ -110,13 +110,8 @@ L.Playback.SliderControl = L.Control.extend({
         var stop = L.DomEvent.stopPropagation;
 
         L.DomEvent
-        .on(this._slider, 'click', stop)
-        .on(this._slider, 'mousedown', stop)
-        .on(this._slider, 'dblclick', stop)
-        .on(this._slider, 'click', L.DomEvent.preventDefault)
-        //.on(this._slider, 'mousemove', L.DomEvent.preventDefault)
-        .on(this._slider, 'change', onSliderChange, this)
-        .on(this._slider, 'mousemove', onSliderChange, this);           
+        .on(this._container, 'mousedown dblclick click mousemove mouseup touchmove touchend', stop)
+        .on(this._slider, 'change mousemove', onSliderChange, this);
 
 
         function onSliderChange(e) {
