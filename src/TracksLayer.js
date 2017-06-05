@@ -23,7 +23,7 @@ L.Playback.TracksLayer = L.Class.extend({
             'GPS Треки' : this.layer
         };
 
-        L.control.layers(null, overlayControl, {
+        this.overlayControl = L.control.layers(null, overlayControl, {
             collapsed : false,
             position: 'bottomleft'
         }).addTo(map);

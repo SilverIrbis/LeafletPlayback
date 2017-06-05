@@ -120,6 +120,9 @@ L.Playback = L.Playback.Clock.extend({
             if (this.dateControl) {
                 this._map.removeControl(this.dateControl);
             }
+            if (this._tracksLayer && this._tracksLayer.overlayControl) {
+              this._map.removeControl(this._tracksLayer.overlayControl);
+            }
         }
     });
 
