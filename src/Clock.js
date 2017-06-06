@@ -20,7 +20,7 @@ L.Playback.Clock = L.Class.extend({
     }
     self._trackController.tock(self._cursor, self._transitionTime);
     self._callbacks(self._cursor);
-    self._cursor += self._tickLen;
+    self._cursor += self._tickLen * self.playControl._speed;
   },
 
   _callbacks: function(cursor) {

@@ -56,19 +56,39 @@ L.Playback.PlayControl = L.Control.extend({
 
         var playControl = L.DomUtil.create('div', 'playControl', this._container);
 
-
         this._button = L.DomUtil.create('button', '', playControl);
         this._button.innerHTML = 'Старт';
 
+        this._speed = 1;
+        this._speedButton = L.DomUtil.create('button', '', playControl);
+        this._speedButton.innerHTML = this._speed + 'х';
 
         var stop = L.DomEvent.stopPropagation;
 
         L.DomEvent
-        .on(this._button, 'click', stop)
-        .on(this._button, 'mousedown', stop)
-        .on(this._button, 'dblclick', stop)
-        .on(this._button, 'click', L.DomEvent.preventDefault)
-        .on(this._button, 'click', play, this);
+        .on(this._container, 'click', stop)
+        .on(this._container, 'mousedown', stop)
+        .on(this._container, 'dblclick', stop)
+        .on(this._container, 'click', L.DomEvent.preventDefault)
+        .on(this._button, 'click', play)
+        .on(this._speedButton, 'click', changeSpeed, this);
+
+        function changeSpeed() {
+            var self = playback.playControl;
+
+            self._speed += 1;
+
+            if (self._speed > 3) {
+                self._speed = 1;
+            }
+
+            self._speedButton.innerHTML = self._speed + 'х';
+
+            if (playback.isPlaying()) {
+                playback.stop();
+                playback.start();
+            }
+        }
         
         function play(){
             if (playback.isPlaying()) {
@@ -77,8 +97,8 @@ L.Playback.PlayControl = L.Control.extend({
             }
             else {
                 playback.start();
-                self._button.innerHTML = 'Стоп';
-            }                
+                self._button.innerHTML = 'Пауза';
+            }
         }
 
         return this._container;
