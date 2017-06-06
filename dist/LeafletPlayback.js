@@ -983,11 +983,20 @@ L.Playback = L.Playback.Clock.extend({
         },
 
         setData : function (geoJSON) {
+            var startTime;
+
             this.clearData();
 
             this.addData(geoJSON, this.getTime());
 
-            this.setCursor(this.getStartTime());
+            startTime = this.getStartTime();
+
+            if (this.sliderControl) {
+              this.sliderControl._slider.min = startTime;
+              this.sliderControl._slider.max = this.getEndTime();
+            }
+
+            this.setCursor(startTime);
         },
 
         // bad implementation
