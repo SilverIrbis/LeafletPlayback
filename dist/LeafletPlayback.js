@@ -813,7 +813,7 @@ L.Playback.DateControl = L.Control.extend({
         return this._container;
     }
 });
-    
+
 L.Playback.PlayControl = L.Control.extend({
     options : {
         position : 'bottomleft'
@@ -833,54 +833,56 @@ L.Playback.PlayControl = L.Control.extend({
         var playControl = L.DomUtil.create('div', 'playControl', this._container);
 
         this._button = L.DomUtil.create('button', '', playControl);
-        this._button.innerHTML = 'Старт';
 
         this._speed = 1;
-        this._speedButton = L.DomUtil.create('button', '', playControl);
-        this._speedButton.innerHTML = this._speed + 'х';
+        this._button.innerHTML = 'Старт (' + this._speed + 'x)';
+
+        this._speedSlider = L.DomUtil.create('input', 'slider', playControl);
+        this._speedSlider.type = 'range';
+        this._speedSlider.className = 'leaflet-speed-slider';
+        this._speedSlider.min = 1;
+        this._speedSlider.max = 3;
+        this._speedSlider.value = 1;
 
         var stop = L.DomEvent.stopPropagation;
 
         L.DomEvent
-        .on(this._container, 'click', stop)
-        .on(this._container, 'mousedown', stop)
-        .on(this._container, 'dblclick', stop)
+        .on(this._container, 'click mousedown dblclick touchmove touchend', stop)
         .on(this._container, 'click', L.DomEvent.preventDefault)
         .on(this._button, 'click', play)
-        .on(this._speedButton, 'click', changeSpeed, this);
+        .on(this._speedSlider, 'change mousemove', changeSpeed, this);
 
-        function changeSpeed() {
+        function changeSpeed(e) {
             var self = playback.playControl;
+            var val = Number(e.target.value);
 
-            self._speed += 1;
-
-            if (self._speed > 3) {
-                self._speed = 1;
-            }
-
-            self._speedButton.innerHTML = self._speed + 'х';
+            self._speed = val
 
             if (playback.isPlaying()) {
                 playback.stop();
                 playback.start();
+
+                self._button.innerHTML = 'Пауза (' + self._speed + 'x)';
+            } else {
+              self._button.innerHTML = 'Старт (' + self._speed + 'x)';
             }
         }
         
         function play(){
             if (playback.isPlaying()) {
                 playback.stop();
-                self._button.innerHTML = 'Старт';
+                self._button.innerHTML = 'Старт (' + self._speed + 'x)';
             }
             else {
                 playback.start();
-                self._button.innerHTML = 'Пауза';
+                self._button.innerHTML = 'Пауза (' + self._speed + 'x)';
             }
         }
 
         return this._container;
     }
-});    
-    
+});
+
 L.Playback.SliderControl = L.Control.extend({
     options : {
         position : 'bottomleft'
