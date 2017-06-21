@@ -835,47 +835,62 @@ L.Playback.PlayControl = L.Control.extend({
         this._button = L.DomUtil.create('button', '', playControl);
 
         this._speed = 1;
-        this._button.innerHTML = 'Старт (' + this._speed + 'x)';
+        this._button.innerHTML = 'Старт';
+        this._button.className = 'btn btn-default';
 
-        this._speedSlider = L.DomUtil.create('input', 'slider', playControl);
-        this._speedSlider.type = 'range';
-        this._speedSlider.className = 'leaflet-speed-slider';
-        this._speedSlider.min = 1;
-        this._speedSlider.max = 3;
-        this._speedSlider.value = 1;
+        this._speedValues = [1, 3, 5];
+        this._speedButtons = [];
+
+        this._speedValues.forEach(function(speed) {
+          var button = L.DomUtil.create('button', '', playControl);
+
+          button.innerHTML = speed + 'x';
+          button.className = 'btn btn-default';
+          button.dataset.speed = speed;
+
+          L.DomEvent.on(button, 'click', changeSpeed, self);
+
+          self._speedButtons.push(button);
+        });
+
+        this._speedButtons[0].className = 'btn btn-success';
 
         var stop = L.DomEvent.stopPropagation;
 
         L.DomEvent
-        .on(this._container, 'click mousedown dblclick touchmove touchend', stop)
-        .on(this._container, 'click', L.DomEvent.preventDefault)
-        .on(this._button, 'click', play)
-        .on(this._speedSlider, 'change mousemove', changeSpeed, this);
+          .on(this._container, 'click mousedown dblclick touchmove touchend', stop)
+          .on(this._container, 'click', L.DomEvent.preventDefault)
+          .on(this._button, 'click', play);
 
         function changeSpeed(e) {
             var self = playback.playControl;
-            var val = Number(e.target.value);
+            var button = e.target;
 
-            self._speed = val
+            self._speedButtons.forEach(function(button) {
+              button.className = 'btn btn-default';
+            })
+
+            button.className = 'btn btn-success';
+            self._speed = +button.dataset.speed;
 
             if (playback.isPlaying()) {
                 playback.stop();
                 playback.start();
 
-                self._button.innerHTML = 'Пауза (' + self._speed + 'x)';
+                self._button.innerHTML = 'Пауза';
             } else {
-              self._button.innerHTML = 'Старт (' + self._speed + 'x)';
+              self._button.innerHTML = 'Старт';
             }
         }
         
         function play(){
             if (playback.isPlaying()) {
                 playback.stop();
-                self._button.innerHTML = 'Старт (' + self._speed + 'x)';
+                self._button.innerHTML = 'Старт';
             }
             else {
                 playback.start();
-                self._button.innerHTML = 'Пауза (' + self._speed + 'x)';
+                self._button.innerHTML = 'Пауза';
             }
         }
 
