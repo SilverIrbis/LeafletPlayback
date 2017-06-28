@@ -60,7 +60,7 @@ L.Playback.PlayControl = L.Control.extend({
 
         this._speed = 1;
         this._button.innerHTML = 'Старт';
-        this._button.className = 'btn btn-default';
+        this._button.className = 'btn btn-success';
 
         this._speedValues = [1, 3, 5];
         this._speedButtons = [];
@@ -77,7 +77,7 @@ L.Playback.PlayControl = L.Control.extend({
           self._speedButtons.push(button);
         });
 
-        this._speedButtons[0].className = 'btn btn-success';
+        this._speedButtons[0].className = 'btn btn-brand';
 
         var stop = L.DomEvent.stopPropagation;
 
@@ -94,7 +94,7 @@ L.Playback.PlayControl = L.Control.extend({
               button.className = 'btn btn-default';
             })
 
-            button.className = 'btn btn-success';
+            button.className = 'btn btn-brand';
             self._speed = +button.dataset.speed;
 
             if (playback.isPlaying()) {
@@ -102,8 +102,10 @@ L.Playback.PlayControl = L.Control.extend({
                 playback.start();
 
                 self._button.innerHTML = 'Пауза';
+                self._button.className = 'btn btn-default';
             } else {
               self._button.innerHTML = 'Старт';
+              self._button.className = 'btn btn-success';
             }
         }
         
@@ -111,10 +113,12 @@ L.Playback.PlayControl = L.Control.extend({
             if (playback.isPlaying()) {
                 playback.stop();
                 self._button.innerHTML = 'Старт';
+                self._button.className = 'btn btn-success';
             }
             else {
                 playback.start();
                 self._button.innerHTML = 'Пауза';
+                self._button.className = 'btn btn-default';
             }
         }
 
