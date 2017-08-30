@@ -16,6 +16,14 @@ L.Playback.TracksLayer = L.Class.extend({
                 return new L.CircleMarker(latlng, { radius : 5 });
             };
         }
+
+        layer_options.style = function(feature) {
+            if (feature.properties.color) {
+                return {color: feature.properties.color}
+            }
+
+            return {}
+        }
     
         this.layer = new L.GeoJSON(null, layer_options);
 

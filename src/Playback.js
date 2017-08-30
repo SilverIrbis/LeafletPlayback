@@ -1,4 +1,3 @@
-
 L.Playback = L.Playback.Clock.extend({
         statics : {
             MoveableMarker : L.Playback.MoveableMarker,
@@ -34,7 +33,7 @@ L.Playback = L.Playback.Clock.extend({
             }
         },
 
-        initialize : function (map, geoJSON, callback, options) {
+        initialize : function (map, geoJSONArray, callback, options) {
             L.setOptions(this, options);
 
             this._map = map;
@@ -45,7 +44,7 @@ L.Playback = L.Playback.Clock.extend({
                 this._tracksLayer = new L.Playback.TracksLayer(map, options);
             }
 
-            this.setData(geoJSON);
+            this.setData(geoJSONArray);
 
 
             if (this.options.playControl) {
@@ -73,12 +72,12 @@ L.Playback = L.Playback.Clock.extend({
             }
         },
 
-        setData : function (geoJSON) {
+        setData : function (geoJSONArray) {
             var startTime;
 
             this.clearData();
 
-            this.addData(geoJSON, this.getTime());
+            this.addData(geoJSONArray, this.getTime());
 
             startTime = this.getStartTime();
 
@@ -91,30 +90,20 @@ L.Playback = L.Playback.Clock.extend({
         },
 
         // bad implementation
-        addData : function (geoJSON, ms) {
+        addData : function (geoJSONArray, ms) {
             // return if data not set
-            if (!geoJSON) {
+            if (!geoJSONArray || !geoJSONArray.length) {
                 return;
             }
 
-            if (geoJSON instanceof Array) {
-              for (var i = 0, len = geoJSON.length; i < len; i++) {
-                this._trackController.addTrack(new L.Playback.Track(geoJSON[i], this.options), ms);
-              }
-            } else {
-              if (geoJSON.type == "FeatureCollection") {
-                for (var i = 0, len = geoJSON.features.length; i < len; i++) {
-                  this._trackController.addTrack(new L.Playback.Track(geoJSON.features[i], this.options), ms);
-                }
-              } else {
-                this._trackController.addTrack(new L.Playback.Track(geoJSON, this.options), ms);
-              }
+            for (var i = 0, len = geoJSONArray.length; i < len; i++) {
+              this._trackController.addTrack(new L.Playback.Track(geoJSONArray[i], this.options), ms);
             }
 
             this._map.fire('playback:set:data');
 
             if (this.options.tracksLayer) {
-                this._tracksLayer.addLayer(geoJSON);
+                this._tracksLayer.addLayer(geoJSONArray);
             }
         },
 
