@@ -861,7 +861,7 @@ L.Playback.PlayControl = L.Control.extend({
 
         this._speed = 1;
         this._button.innerHTML = 'Старт';
-        this._button.className = 'btn btn-success';
+        this._button.className = 'btn btn_success';
 
         this._speedValues = [1, 3, 5];
         this._speedButtons = [];
@@ -870,7 +870,7 @@ L.Playback.PlayControl = L.Control.extend({
           var button = L.DomUtil.create('button', '', playControl);
 
           button.innerHTML = speed + 'x';
-          button.className = 'btn btn-default';
+          button.className = 'btn btn_default';
           button.dataset.speed = speed;
 
           L.DomEvent.on(button, 'click', changeSpeed, self);
@@ -878,7 +878,7 @@ L.Playback.PlayControl = L.Control.extend({
           self._speedButtons.push(button);
         });
 
-        this._speedButtons[0].className = 'btn btn-brand';
+        this._speedButtons[0].className = 'btn btn_brand';
 
         var stop = L.DomEvent.stopPropagation;
 
@@ -892,10 +892,10 @@ L.Playback.PlayControl = L.Control.extend({
             var button = e.target;
 
             self._speedButtons.forEach(function(button) {
-              button.className = 'btn btn-default';
+              button.className = 'btn btn_default';
             })
 
-            button.className = 'btn btn-brand';
+            button.className = 'btn btn_brand';
             self._speed = +button.dataset.speed;
 
             if (playback.isPlaying()) {
@@ -903,10 +903,10 @@ L.Playback.PlayControl = L.Control.extend({
                 playback.start();
 
                 self._button.innerHTML = 'Пауза';
-                self._button.className = 'btn btn-default';
+                self._button.className = 'btn btn_default';
             } else {
               self._button.innerHTML = 'Старт';
-              self._button.className = 'btn btn-success';
+              self._button.className = 'btn btn_success';
             }
         }
         
@@ -914,12 +914,12 @@ L.Playback.PlayControl = L.Control.extend({
             if (playback.isPlaying()) {
                 playback.stop();
                 self._button.innerHTML = 'Старт';
-                self._button.className = 'btn btn-success';
+                self._button.className = 'btn btn_success';
             }
             else {
                 playback.start();
                 self._button.innerHTML = 'Пауза';
-                self._button.className = 'btn btn-default';
+                self._button.className = 'btn btn_default';
             }
         }
 
