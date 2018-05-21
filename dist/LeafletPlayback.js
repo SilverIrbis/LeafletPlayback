@@ -117,6 +117,9 @@ L.Playback.MoveableMarker = L.Marker.extend({
         if (jQuery.isFunction(marker_options)){        
             marker_options = marker_options(feature);
         }
+
+        marker_options.icon.options.extraDivClasses = 'track-marker';
+        marker_options.icon.options.trackName = feature.name;
         
         L.Marker.prototype.initialize.call(this, startLatLng, marker_options);
         
