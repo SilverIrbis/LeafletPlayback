@@ -1052,6 +1052,10 @@ L.Playback = L.Playback.Clock.extend({
             }
         },
 
+        getLatLngByTime : function(timestamp, i) {
+          return this._trackController.getTracks()[i].tick(timestamp);
+        },
+
         setData : function (geoJSONArray) {
             var startTime;
 
